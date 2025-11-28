@@ -1,0 +1,12 @@
+title: "P/L Dashboard"
+description: "프로젝트별 손익계산서"
+baseurl: "/pl-dashboard"
+url: "https://diggingtag.github.io"
+theme: minima
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+markdown: kramdown
