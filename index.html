@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+<h1>프로젝트별 손익 대시보드</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>프로젝트</th>
+      <th>매출</th>
+      <th>총원가</th>
+      <th>마진</th>
+      <th>마진율</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for project in site.projects %}
+      {% assign c = project.costs %}
+      {% assign total_cost = c.manufacturing | plus: c.qc | plus: c.logistics | plus: c.etc %}
+      {% assign margin = project.revenue | minus: total_cost %}
+      {% assign margin_rate = margin | times: 100 | divided_by: project.revenue %}
+
+      <tr>
+        <td><a href="{{ project.url | relative_url }}">{{ project.title }}</a></td>
+        <td>{{ project.revenue | number_with_delimiter }}</td>
+        <td>{{ total_cost | number_with_delimiter }}</td>
+        <td>{{ margin | number_with_delimiter }}</td>
+        <td>{{ margin_rate | round:2 }}%</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
