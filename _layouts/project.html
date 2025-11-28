@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+<h1>{{ page.title }}</h1>
+
+<p><strong>클라이언트:</strong> {{ page.client }}</p>
+<p><strong>매출:</strong> {{ page.revenue | number_with_delimiter }}원</p>
+
+<h2>비용 내역</h2>
+<ul>
+  <li>제작비: {{ page.costs.manufacturing | number_with_delimiter }}원</li>
+  <li>QC: {{ page.costs.qc | number_with_delimiter }}원</li>
+  <li>물류: {{ page.costs.logistics | number_with_delimiter }}원</li>
+  <li>기타: {{ page.costs.etc | number_with_delimiter }}원</li>
+</ul>
+
+{% assign total_cost = page.costs.manufacturing 
+                       | plus: page.costs.qc 
+                       | plus: page.costs.logistics 
+                       | plus: page.costs.etc %}
+
+{% assign margin = page.revenue | minus: total_cost %}
+{% assign margin_rate = margin | times: 100 | divided_by: page.revenue %}
+
+<h2>손익 요약</h2>
+<p>총원가: {{ total_cost | number_with_delimiter }}원</p>
+<p>총마진: {{ margin | number_with_delimiter }}원</p>
+<p>마진율: {{ margin_rate | round: 2 }}%</p>
+
+<hr>
+
+<p>{{ content }}</p>
